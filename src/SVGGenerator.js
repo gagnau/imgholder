@@ -61,7 +61,6 @@ class SVGGenerator {
         if(containerWidth && containerHeight) {
             const boundsScale = containerWidth / containerHeight;
             const svgScale = this.width / this.height;
-console.log(Math.abs(boundsScale - svgScale));
             if(Math.abs(boundsScale - svgScale) > 0.02) {
                 this.backgroundColor = 'tomato';
             }
