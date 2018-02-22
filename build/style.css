@@ -41,6 +41,10 @@ body {
     width: 100%;
 }
 
+.teaser__image--height {
+    height: 100px;
+}
+
 .teaser__header {
 }
 .teaser__body {

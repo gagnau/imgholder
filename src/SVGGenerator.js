@@ -1,13 +1,14 @@
 class SVGGenerator {
 
     constructor(imageContainer) {
+        this.imageContainer = imageContainer;
         this.svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         const dimensions = imageContainer.dataset.placeholder.split('/');
         this.width = parseInt(dimensions[0]);
         this.height = parseInt(dimensions[1]);
         this.svgElement.setAttributeNS(null, 'width', this.width);
         this.svgElement.setAttributeNS(null, 'height', this.height);
-        this.createBackground('lightgray');
+        this._setColors();
     }
 
     createBackground(color) {
@@ -52,6 +53,21 @@ class SVGGenerator {
         this.svgElement.append(line);
     }
 
+    _setColors() {
+        const containerWidth = Math.round(this.imageContainer.getBoundingClientRect().width);
+        const containerHeight = Math.round(this.imageContainer.getBoundingClientRect().height);
+
+        this.backgroundColor = 'lightgray';
+        if(containerWidth && containerHeight) {
+            const boundsScale = containerWidth / containerHeight;
+            const svgScale = this.width / this.height;
+            if(boundsScale != svgScale) {
+                this.backgroundColor = 'tomato';
+            }
+        }
+        this.createBackground(this.backgroundColor);
+    }
+
     _createDefaultSVGImage() {
         const max = (this.width > this.height) ? this.width : this.height;
         const maxRadius = max/2;
@@ -64,7 +80,7 @@ class SVGGenerator {
         let currentElement = 0;
 
         do {
-            this.createCircle(maxRadius - scaleFactor * currentElement, 'black', 'lightgray');
+            this.createCircle(maxRadius - scaleFactor * currentElement, 'black', this.backgroundColor);
             currentElement++;
 
         } while(currentElement < maxElements)
@@ -85,10 +101,10 @@ class SVGGenerator {
         const content = this.svgElement.ownerDocument.createTextNode(this.width + ' x ' + this.height);
 
         textElement.setAttributeNS(null, 'x', this.width/2);
-        textElement.setAttributeNS(null, 'y', this.height/2);
+        textElement.setAttributeNS(null, 'y', this.height/2 + 25);
         textElement.setAttributeNS(null, 'fill', 'black');
         textElement.setAttributeNS(null, 'text-anchor', 'middle');
-        textElement.setAttributeNS(null, 'font-size', '50');
+        textElement.setAttributeNS(null, 'font-size', '100');
         textElement.setAttributeNS(null, 'font-family', 'Helvetica');
 
         textElement.appendChild(content);
