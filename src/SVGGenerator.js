@@ -3,8 +3,8 @@ class SVGGenerator {
     constructor(imageContainer) {
         this.svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         const dimensions = imageContainer.dataset.placeholder.split('/');
-        this.width = dimensions[0];
-        this.height = dimensions[1];
+        this.width = parseInt(dimensions[0]);
+        this.height = parseInt(dimensions[1]);
         this.svgElement.setAttributeNS(null, 'width', this.width);
         this.svgElement.setAttributeNS(null, 'height', this.height);
         this.createBackground('lightgray');
@@ -53,29 +53,44 @@ class SVGGenerator {
     }
 
     _createDefaultSVGImage() {
-        const defaultRadius = this.height/2;
+        const max = (this.width > this.height) ? this.width : this.height;
+        const maxRadius = max/2;
+        const scaleFactor = maxRadius / 5;
+        const horizontalCenter = this.height/2;
+        const verticalCenter = this.width/2;
+        const maxCircles = 5;
+        let currentCircles = 0;
+
+        do {
+            this.createCircle(maxRadius - scaleFactor * currentCircles, 'black', 'lightgray');
+            currentCircles++;
+
+        } while(currentCircles < maxCircles)
+
+        /*
         this.createCircle(defaultRadius * 2, 'black', 'lightgray');
         this.createCircle(defaultRadius * 1.5, 'black', 'lightgray');
         this.createCircle(defaultRadius, 'black', 'lightgray');
         this.createCircle(defaultRadius*0.5, 'black', 'lightgray');
         this.createCircle(defaultRadius*0.01, 'black', 'lightgray');
-
+        */
+/*
         this.createHorizontalLine(0, 0, this.width, 'black');
-        this.createHorizontalLine(0, defaultRadius/2, this.width, 'black');
-        this.createHorizontalLine(0, defaultRadius, this.width, 'black');
-        this.createHorizontalLine(0, defaultRadius*1.5, this.width, 'black');
-        this.createHorizontalLine(0, defaultRadius*2, this.width, 'black');
+        this.createHorizontalLine(0, horizontalCenter/2, this.width, 'black');
+        this.createHorizontalLine(0, horizontalCenter, this.width, 'black');
+        this.createHorizontalLine(0, horizontalCenter*1.5, this.width, 'black');
+        this.createHorizontalLine(0, horizontalCenter*2, this.width, 'black');
 
         this.createVerticalLine(0, 0, this.width, 'black');
-        this.createVerticalLine(defaultRadius/2, 0, this.width, 'black');
-        this.createVerticalLine(defaultRadius, 0, this.width, 'black');
-        this.createVerticalLine(defaultRadius*1.5, 0, this.width, 'black');
-        this.createVerticalLine(defaultRadius*2, 0, this.width, 'black');
-        this.createVerticalLine(defaultRadius*2.5, 0, this.width, 'black');
-        this.createVerticalLine(defaultRadius*3, 0, this.width, 'black');
-        this.createVerticalLine(defaultRadius*3.5, 0, this.width, 'black');
-        this.createVerticalLine(defaultRadius*4, 0, this.width, 'black');
-
+        this.createVerticalLine(verticalCenter/2, 0, this.width, 'black');
+        this.createVerticalLine(verticalCenter, 0, this.width, 'black');
+        this.createVerticalLine(verticalCenter*1.5, 0, this.width, 'black');
+        this.createVerticalLine(verticalCenter*2, 0, this.width, 'black');
+        this.createVerticalLine(verticalCenter*2.5, 0, this.width, 'black');
+        this.createVerticalLine(verticalCenter*3, 0, this.width, 'black');
+        this.createVerticalLine(verticalCenter*3.5, 0, this.width, 'black');
+        this.createVerticalLine(verticalCenter*4, 0, this.width, 'black');
+*/
         return this.svgElement;
     }
 
