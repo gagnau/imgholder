@@ -56,24 +56,27 @@ class SVGGenerator {
         const max = (this.width > this.height) ? this.width : this.height;
         const maxRadius = max/2;
         const scaleFactor = maxRadius / 5;
-        const horizontalCenter = this.height/2;
-        const verticalCenter = this.width/2;
-        const maxCircles = 5;
-        let currentCircles = 0;
+
+        const horizontalScaling = this.height/4;
+        const verticalScaling = this.width/4;
+
+        const maxElements = 5;
+        let currentElement = 0;
 
         do {
-            this.createCircle(maxRadius - scaleFactor * currentCircles, 'black', 'lightgray');
-            currentCircles++;
+            this.createCircle(maxRadius - scaleFactor * currentElement, 'black', 'lightgray');
+            currentElement++;
 
-        } while(currentCircles < maxCircles)
+        } while(currentElement < maxElements)
 
-        /*
-        this.createCircle(defaultRadius * 2, 'black', 'lightgray');
-        this.createCircle(defaultRadius * 1.5, 'black', 'lightgray');
-        this.createCircle(defaultRadius, 'black', 'lightgray');
-        this.createCircle(defaultRadius*0.5, 'black', 'lightgray');
-        this.createCircle(defaultRadius*0.01, 'black', 'lightgray');
-        */
+        currentElement = 0;
+        do {
+            this.createHorizontalLine(0, horizontalScaling * currentElement, this.width, 'black');
+            this.createVerticalLine(verticalScaling * currentElement, 0, this.height, 'black');
+            currentElement++;
+
+        } while(currentElement < maxElements)
+
 /*
         this.createHorizontalLine(0, 0, this.width, 'black');
         this.createHorizontalLine(0, horizontalCenter/2, this.width, 'black');
