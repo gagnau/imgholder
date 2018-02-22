@@ -85,9 +85,12 @@ class SVGGenerator {
         const content = this.svgElement.ownerDocument.createTextNode(this.width + ' x ' + this.height);
 
         textElement.setAttributeNS(null, 'x', this.width/2);
-        textElement.setAttributeNS(null, 'y', this.height/2 + 5);
-        textElement.setAttributeNS(null, 'fill', 'white');
+        textElement.setAttributeNS(null, 'y', this.height/2);
+        textElement.setAttributeNS(null, 'fill', 'black');
         textElement.setAttributeNS(null, 'text-anchor', 'middle');
+        textElement.setAttributeNS(null, 'font-size', '50');
+        textElement.setAttributeNS(null, 'font-family', 'Helvetica');
+
         textElement.appendChild(content);
         this.svgElement.append(textElement);        
     }
