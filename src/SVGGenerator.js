@@ -77,28 +77,24 @@ class SVGGenerator {
 
         } while(currentElement < maxElements)
 
-/*
-        this.createHorizontalLine(0, 0, this.width, 'black');
-        this.createHorizontalLine(0, horizontalCenter/2, this.width, 'black');
-        this.createHorizontalLine(0, horizontalCenter, this.width, 'black');
-        this.createHorizontalLine(0, horizontalCenter*1.5, this.width, 'black');
-        this.createHorizontalLine(0, horizontalCenter*2, this.width, 'black');
-
-        this.createVerticalLine(0, 0, this.width, 'black');
-        this.createVerticalLine(verticalCenter/2, 0, this.width, 'black');
-        this.createVerticalLine(verticalCenter, 0, this.width, 'black');
-        this.createVerticalLine(verticalCenter*1.5, 0, this.width, 'black');
-        this.createVerticalLine(verticalCenter*2, 0, this.width, 'black');
-        this.createVerticalLine(verticalCenter*2.5, 0, this.width, 'black');
-        this.createVerticalLine(verticalCenter*3, 0, this.width, 'black');
-        this.createVerticalLine(verticalCenter*3.5, 0, this.width, 'black');
-        this.createVerticalLine(verticalCenter*4, 0, this.width, 'black');
-*/
         return this.svgElement;
+    }
+
+    _appendText() {
+        const textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        const content = this.svgElement.ownerDocument.createTextNode(this.width + ' x ' + this.height);
+
+        textElement.setAttributeNS(null, 'x', this.width/2);
+        textElement.setAttributeNS(null, 'y', this.height/2 + 5);
+        textElement.setAttributeNS(null, 'fill', 'white');
+        textElement.setAttributeNS(null, 'text-anchor', 'middle');
+        textElement.appendChild(content);
+        this.svgElement.append(textElement);        
     }
 
     getDefaultXMLImage() {
         this._createDefaultSVGImage();
+        this._appendText();
         return (new XMLSerializer).serializeToString(this.svgElement);
     }
 
